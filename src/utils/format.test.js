@@ -1,10 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { formatPrice, isPhoneComplete, nextPhone } from './format.js';
 import { pointInPolygon } from './geo.js';
-
-const store = JSON.parse(readFileSync(new URL('../../public/data/store.json', import.meta.url), 'utf8'));
+import { testStore as store } from './test-store.js';
 
 test('цена: разряды и знак', () => {
   assert.equal(formatPrice(150), '150 Р');
@@ -74,7 +72,7 @@ test('точка в многоугольнике', () => {
   assert.equal(pointInPolygon([5, 8], notch), false);
 });
 
-test('стартовая зона: кофейня внутри, верхняя часть города снаружи', () => {
+test('зона вокруг Мещерского озера: кофейня внутри, верхняя часть города снаружи', () => {
   const { zone } = store.delivery;
   assert.equal(pointInPolygon(store.cafe.coords, zone), true);
   assert.equal(pointInPolygon([44.07, 56.32], zone), false);

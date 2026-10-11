@@ -1,0 +1,86 @@
+// Данные для тестов. Опубликованный store.json правит владелец — цены, размеры, зону, —
+// поэтому расчёты проверяются на этом неизменном наборе, а не на нём.
+export const testStore = {
+  categories: [
+    { id: 'classic', title: 'Классические напитки' },
+    { id: 'not-coffee', title: 'Не кофе' },
+    { id: 'dessert', title: 'Десертный кофе' },
+  ],
+  addons: [
+    { id: 'syrup', name: 'Сироп', price: 30 },
+    { id: 'marshmallow', name: 'Маршмеллоу', price: 30 },
+    { id: 'plant-milk', name: 'Раст. молоко', price: 70 },
+  ],
+  products: [
+    {
+      id: 'latte',
+      categoryId: 'classic',
+      name: 'Латте',
+      description: 'Мягкий и сливочный',
+      image: 'images/img_5.webp',
+      zoom: 1.2,
+      variants: [
+        { size: 250, price: 210 },
+        { size: 350, price: 240 },
+        { size: 450, price: 270 },
+      ],
+      addonIds: [],
+      hidden: false,
+    },
+    {
+      id: 'hot-chocolate',
+      categoryId: 'not-coffee',
+      name: 'Горячий шоколад',
+      description: 'Насыщенный шоколадный вкус',
+      image: 'images/img_5.webp',
+      zoom: 1.2,
+      variants: [
+        { size: 250, price: 170 },
+        { size: 350, price: 200 },
+        { size: 450, price: 230 },
+      ],
+      addonIds: ['syrup', 'marshmallow', 'plant-milk'],
+      hidden: false,
+    },
+    {
+      id: 'latte-twix',
+      categoryId: 'dessert',
+      name: 'Латте твикс',
+      description: 'Классический черный кофе',
+      image: 'images/img_5.webp',
+      zoom: 1.2,
+      variants: [
+        { size: 350, price: 255 },
+        { size: 450, price: 285 },
+      ],
+      addonIds: [],
+      hidden: false,
+    },
+  ],
+  delivery: {
+    price: 100,
+    freeFrom: 1000,
+    minOrder: 0,
+    areaText: 'В пределах 5км\nот кофейни',
+    time: 'от 30 мин',
+    zone: [
+      [43.895, 56.346],
+      [43.93, 56.352],
+      [43.962, 56.348],
+      [43.982, 56.336],
+      [43.978, 56.326],
+      [43.965, 56.314],
+      [43.94, 56.305],
+      [43.905, 56.308],
+      [43.885, 56.322],
+      [43.885, 56.338],
+    ],
+  },
+  cafe: {
+    address: 'Мещерский бульвар, 10Б',
+    coords: [43.9356186, 56.3391381],
+    phone: '+7 950 625 21 44',
+    email: 'info@coffee-mall-nn.ru',
+  },
+  socials: { telegram: '#', vk: '#', whatsapp: '#' },
+};

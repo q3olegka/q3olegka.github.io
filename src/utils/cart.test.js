@@ -3,8 +3,9 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { addLine, countOf, deliveryPrice, lineKey, removeLast, setLineQty, summarize } from './cart.js';
 import { isValidStore, sizeLegend, withDefaults } from './store.js';
+import { testStore as store } from './test-store.js';
 
-const store = JSON.parse(readFileSync(new URL('../../public/data/store.json', import.meta.url), 'utf8'));
+const published = JSON.parse(readFileSync(new URL('../../public/data/store.json', import.meta.url), 'utf8'));
 
 const chocolate = (size, addonIds = []) => ({ productId: 'hot-chocolate', size, addonIds });
 
@@ -102,10 +103,15 @@ test('минимальная сумма заказа: сколько не хва
   assert.equal(summarize([], withMinimum).missing, 500);
 });
 
-test('данные по умолчанию проходят проверку формы', () => {
+test('проверка формы данных', () => {
   assert.equal(isValidStore(store), true);
   assert.equal(isValidStore({ ...store, products: [{ id: 'x' }] }), false);
   assert.equal(isValidStore(null), false);
+});
+
+// Единственная проверка самого опубликованного файла: его правит владелец, и сломанный файл не должен уйти на сайт
+test('опубликованный store.json проходит проверку формы', () => {
+  assert.equal(isValidStore(published), true);
 });
 
 test('файл без минимальной суммы подходит и получает ноль, с нечисловой — нет', () => {
