@@ -7,8 +7,10 @@
   box-sizing: border-box;
 }
 
+/* На телефоне браузер сам подсвечивает место касания голубым прямоугольником — у кнопок свои состояния */
 html {
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -51,6 +53,17 @@ button {
   cursor: pointer;
 }
 
+/* Касание кнопки не выделяет её текст, а быстрое двойное — не увеличивает страницу */
+button,
+.button,
+.chip,
+.stepper,
+.nav a {
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -87,7 +100,15 @@ img {
     color 0.2s;
 }
 
-.button:hover {
+/* Наведение — только там, где есть мышь: на телефоне оно «залипает» на кнопке после касания */
+@media (hover: hover) {
+  .button:hover {
+    background: var(--accent-hover);
+  }
+}
+
+/* Отклик на нажатие — и мышью, и пальцем */
+.button:active {
   background: var(--accent-hover);
 }
 
@@ -102,7 +123,13 @@ img {
   color: var(--text);
 }
 
-.button--ghost:hover {
+@media (hover: hover) {
+  .button--ghost:hover {
+    background: var(--control-hover);
+  }
+}
+
+.button--ghost:active {
   background: var(--control-hover);
 }
 
@@ -202,7 +229,13 @@ img {
     color 0.2s;
 }
 
-.cart-button:hover {
+@media (hover: hover) {
+  .cart-button:hover {
+    background: var(--accent-hover);
+  }
+}
+
+.cart-button:active {
   background: var(--accent-hover);
 }
 
@@ -377,6 +410,10 @@ img {
   height: 100%;
   border-radius: var(--radius-pill);
   color: var(--accent);
+}
+
+.stepper button:active {
+  background: var(--control-hover);
 }
 
 .stepper span {
@@ -702,8 +739,10 @@ img {
   transition: background-color 0.2s;
 }
 
-.close:hover {
-  background: var(--control);
+@media (hover: hover) {
+  .close:hover {
+    background: var(--control);
+  }
 }
 
 .total {
@@ -850,8 +889,10 @@ img {
   width: 120px;
 }
 
-.chip:hover .chip__name {
-  background: var(--control-hover);
+@media (hover: hover) {
+  .chip:hover .chip__name {
+    background: var(--control-hover);
+  }
 }
 
 .chip input:checked + .chip__name {
