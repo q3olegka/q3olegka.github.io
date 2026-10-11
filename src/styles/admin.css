@@ -1,0 +1,382 @@
+/* Страница настройки: рабочий инструмент владельца в палитре сайта. Макета у неё нет. */
+
+.admin {
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+.admin__bar {
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.admin__bar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;
+  min-height: 76px;
+  padding-block: 12px;
+}
+
+.admin__status {
+  margin-right: auto;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.admin__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 28px 24px;
+}
+
+.admin__tabs button {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill);
+  background: var(--control);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+.admin__tabs button:hover {
+  background: var(--control-hover);
+}
+
+.admin__tabs button[aria-current='true'] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.abutton {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 18px;
+  background: var(--control);
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.abutton:hover {
+  background: var(--control-hover);
+}
+
+.abutton:disabled {
+  color: var(--muted);
+  cursor: default;
+}
+
+.abutton:disabled:hover {
+  background: var(--control);
+}
+
+.abutton--icon {
+  width: 36px;
+  padding: 0;
+}
+
+.abutton--danger {
+  color: var(--bad);
+}
+
+.abutton--danger.is-armed {
+  background: var(--bad);
+  color: #fff;
+}
+
+.afield {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.afield > span {
+  color: var(--muted);
+}
+
+.afield small {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.afield input:not([type]),
+.afield input[type='text'],
+.afield input[type='tel'],
+.afield input[type='email'],
+.afield select,
+.afield textarea,
+.editor__variant input {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--field);
+  box-shadow: var(--hairline);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.afield [aria-invalid='true'] {
+  box-shadow: 0 0 0 2px var(--bad);
+}
+
+.panel-list {
+  display: grid;
+  gap: 24px;
+}
+
+.panel {
+  padding: 24px clamp(16px, 3vw, 32px) 28px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--hairline);
+}
+
+.panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel__head h2,
+.editor h2 {
+  font-size: 24px;
+}
+
+.panel__note,
+.panel__empty,
+.panel__message {
+  max-width: 760px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.panel__message {
+  color: var(--text);
+}
+
+.panel__note code {
+  font-size: 13px;
+}
+
+.panel__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.rows {
+  margin-top: 12px;
+}
+
+.rows li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.rows li.is-hidden .rows__photo,
+.rows li.is-hidden .rows__text {
+  opacity: 0.5;
+}
+
+.rows .afield {
+  flex: 1 1 220px;
+}
+
+.rows .afield:has(.rows__number) {
+  flex: 0 0 96px;
+}
+
+.rows__photo {
+  flex: none;
+  width: 78px;
+  border-radius: 12px;
+}
+
+.rows__text {
+  display: grid;
+  flex: 1 1 220px;
+  gap: 4px;
+  min-width: 0;
+}
+
+.rows__text strong {
+  font-weight: 500;
+}
+
+.rows__text span,
+.rows__hint {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.rows__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px 20px;
+  margin-top: 20px;
+}
+
+.form-grid .afield:has(textarea) {
+  grid-column: 1 / -1;
+}
+
+/* Редактор товара: поля слева, карточка-образец справа */
+.editor {
+  display: grid;
+  grid-template-columns: minmax(0, 560px) 320px;
+  align-items: start;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 24px clamp(16px, 3vw, 32px) 28px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--hairline);
+}
+
+.editor__fields {
+  display: grid;
+  gap: 18px;
+}
+
+.editor__photo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.editor__zoom {
+  display: flex;
+  flex: 1 1 200px;
+  align-items: center;
+  gap: 10px;
+}
+
+.editor__zoom input {
+  flex: 1;
+  accent-color: var(--accent);
+}
+
+.editor__variant {
+  display: grid;
+  grid-template-columns: 1fr 1fr 36px;
+  gap: 8px;
+}
+
+.editor__variant + .abutton,
+.afield > .abutton {
+  justify-self: start;
+}
+
+.editor__checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.editor__checks label,
+.editor__check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.editor input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.editor__error {
+  color: var(--bad);
+}
+
+.editor__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.editor__preview {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.editor__preview .card {
+  color: var(--text);
+  pointer-events: none;
+}
+
+.zone-editor {
+  height: min(70vh, 620px);
+  margin-top: 16px;
+}
+
+/* Вершина зоны на карте: большая — тянется, маленькая на середине стороны — добавляет вершину */
+.zone-handle {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 30%);
+  translate: -50% -50%;
+  cursor: grab;
+}
+
+.zone-handle--mid {
+  width: 12px;
+  height: 12px;
+  border-width: 2px;
+  opacity: 0.75;
+  cursor: copy;
+}
+
+@media (max-width: 959px) {
+  .editor {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .editor__preview {
+    position: static;
+    max-width: 320px;
+  }
+}

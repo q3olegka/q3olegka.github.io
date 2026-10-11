@@ -1,0 +1,36 @@
+import { cart } from '../hooks/useCart.js';
+import { countOf } from '../utils/cart.js';
+import ProductCard from './ProductCard.jsx';
+
+// legend — справка о размерах: [{ size, available }], недоступный размер серый
+export default function CategorySection({ category, products, legend, summary, onAdd }) {
+  return (
+    <section className="category">
+      <header className="category__head">
+        <h2>{category.title}</h2>
+        {legend.length > 0 && (
+          <p className="legend">
+            <span>Размер (г)</span>
+            {legend.map(({ size, available }) => (
+              <span key={size} className={available ? '' : 'is-off'}>
+                {size}
+              </span>
+            ))}
+          </p>
+        )}
+      </header>
+      <div className="grid">
+        {products.map((product, index) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            index={index}
+            count={countOf(summary, product.id)}
+            onAdd={() => onAdd(product.id)}
+            onRemoveLast={() => cart.removeLast(product.id)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
