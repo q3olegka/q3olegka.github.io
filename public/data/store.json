@@ -146,6 +146,7 @@
   "delivery": {
     "price": 100,
     "freeFrom": 1000,
+    "minOrder": 0,
     "areaText": "В пределах 5км\nот кофейни",
     "time": "от 30 мин",
     "zone": [

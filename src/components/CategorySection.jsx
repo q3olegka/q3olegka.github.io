@@ -2,7 +2,7 @@ import { cart } from '../hooks/useCart.js';
 import { countOf } from '../utils/cart.js';
 import ProductCard from './ProductCard.jsx';
 
-// legend — справка о размерах: [{ size, available }], недоступный размер серый
+// legend — справка о размерах: граммы, которые есть у товаров категории
 export default function CategorySection({ category, products, legend, summary, onAdd }) {
   return (
     <section className="category">
@@ -11,10 +11,8 @@ export default function CategorySection({ category, products, legend, summary, o
         {legend.length > 0 && (
           <p className="legend">
             <span>Размер (г)</span>
-            {legend.map(({ size, available }) => (
-              <span key={size} className={available ? '' : 'is-off'}>
-                {size}
-              </span>
+            {legend.map((size) => (
+              <span key={size}>{size}</span>
             ))}
           </p>
         )}

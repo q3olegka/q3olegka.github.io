@@ -257,14 +257,12 @@ img {
   display: flex;
   gap: 18px;
   padding-top: 7px;
+  color: var(--muted);
 }
 
 .legend span:first-child {
   margin-right: 16px;
-}
-
-.legend .is-off {
-  color: var(--muted);
+  color: var(--text);
 }
 
 .grid {
@@ -575,20 +573,15 @@ img {
   top: 30px;
   right: 23px;
   z-index: 2;
-  display: grid;
-  gap: 32px;
-  width: 228px;
-  padding: 25px 17px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: calc(100% - 46px);
+  padding: 14px 20px 14px 14px;
   border-radius: var(--radius-card);
   background: var(--bg);
   box-shadow: var(--hairline);
   font-size: 14px;
-}
-
-.map__card li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
 }
 
 .map__card svg {
@@ -745,17 +738,16 @@ img {
   animation: pop-out 0.3s ease both;
 }
 
-/* Ряд с фото — 368 px, как в макете. В низком окне он сжимается (фото обрезается сильнее),
-   но не меньше высоты размеров и допов; если не хватает и этого — попап прокручивается.
-   249 px — всё остальное по высоте: поля попапа 36 и 39 и нижний ряд 174 */
+/* Высота попапа постоянная — 617 px, как в макете, в низком окне — по окну. Нижний ряд (название и блок
+   итога) занимает сколько нужно, верхний — остальное: в макете это 368 px. Фото под него обрезается,
+   а размеры и допы, если не помещаются, прокручиваются внутри своего блока — сам попап не прокручивается */
 .buy {
   position: relative;
   display: grid;
   grid-template-columns: 512px minmax(0, 1fr);
-  grid-template-rows: minmax(min-content, min(368px, 100dvh - 2 * var(--pad) - 249px)) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
   column-gap: 44px;
-  overflow-y: auto;
-  max-height: calc(100dvh - 2 * var(--pad));
+  height: min(617px, 100dvh - 2 * var(--pad));
   padding: 36px 35px 39px;
 }
 
@@ -786,11 +778,20 @@ img {
   font-size: 24px;
 }
 
+/* Поля слева и справа вынесены за колонку: слева — место под обводку фокуса у чипов,
+   справа — полоса прокрутки встаёт правее крестика, а не под него */
 .buy__options {
   display: grid;
   grid-area: 1 / 2;
   align-content: start;
   gap: 43px;
+  overflow-y: auto;
+  min-height: 0;
+  margin: 0 -27px 0 -4px;
+  padding: 0 27px 0 4px;
+  overscroll-behavior: contain;
+  scrollbar-color: #d9d0c4 transparent;
+  scrollbar-width: thin;
 }
 
 .options__label {
@@ -834,9 +835,12 @@ img {
   place-items: center;
   width: 150px;
   height: 48px;
+  padding: 0 8px;
   border-radius: var(--radius-pill);
   background: var(--control);
   font-size: 18px;
+  line-height: 1.1;
+  text-align: center;
   transition:
     background-color 0.2s,
     color 0.2s;
@@ -939,35 +943,32 @@ img {
   aspect-ratio: 174 / 125;
 }
 
+/* Высота строки корзины — 131 px, как у строки без допов в макете; допы идут сразу под названием */
 .basket-item__text {
   display: flex;
   grid-area: text;
   flex-direction: column;
+  min-height: 131px;
   margin-right: -25px;
 }
 
-/* Название занимает две строки, даже если короткое: строки корзины одной высоты */
 .basket-item__text h3 {
   max-width: 199px;
-  min-height: 44px;
   font-size: 18px;
 }
 
 .basket-item__text p {
-  margin-top: 19px;
+  margin-top: 6px;
   color: var(--muted);
 }
 
-/* Цена стоит в одну линию со счётчиком справа */
+/* Цена прижата к низу и стоит в одну линию со счётчиком справа */
 .basket-item__text strong {
-  margin-top: 12px;
+  margin-top: auto;
+  padding-top: 8px;
   font-size: 24px;
   font-weight: 500;
   line-height: 48px;
-}
-
-.basket-item__text h3 + strong {
-  margin-top: 39px;
 }
 
 .basket-item__delete {
@@ -984,9 +985,17 @@ img {
 }
 
 .basket__hint {
+  display: grid;
+  gap: 10px;
   padding: 44px 59px 32px;
   color: var(--muted);
   font-size: 18px;
+}
+
+/* Сумма меньше минимальной: оформить заказ нельзя */
+.basket__min,
+.order-summary__min {
+  color: var(--bad);
 }
 
 .basket__foot {
@@ -997,6 +1006,11 @@ img {
 
 .basket__foot .total {
   padding: 0 24px 0 27px;
+}
+
+.basket__foot .total span,
+.order-summary__foot .total span {
+  font-size: 24px;
 }
 
 .basket__foot .button {
@@ -1195,16 +1209,17 @@ img {
   font-size: 14px;
 }
 
-.order-summary__items li > :last-child,
 .order-summary__price {
   text-align: right;
 }
 
+/* Допы — второй строкой под названием; своя высота строки, иначе длинный список допов расползается */
 .order-summary__addons {
   grid-column: 1 / -1;
-  grid-row: 2;
-  margin-top: -13px;
-  text-align: left !important;
+  margin-top: -8px;
+  padding-bottom: 6px;
+  font-size: 18px;
+  line-height: 1.3;
 }
 
 .order-summary__empty {
@@ -1228,10 +1243,18 @@ img {
   padding: 0 30px 0 34px;
 }
 
+.order-summary__min {
+  margin: 24px 30px 0 34px;
+}
+
 .consent {
   min-height: 36px;
   margin: 62px 30px 0 34px;
   color: var(--muted);
+}
+
+.order-summary__min + .consent {
+  margin-top: 16px;
 }
 
 .consent a {
@@ -1331,7 +1354,7 @@ img {
     flex-direction: column;
     overflow: hidden;
     min-width: 0;
-    max-height: none;
+    height: auto;
     padding: 0;
   }
 
@@ -1359,7 +1382,8 @@ img {
   }
 
   .buy__options {
-    margin-top: 28px;
+    overflow: visible;
+    margin: 28px 0 0;
     padding: 0 14px;
   }
 
@@ -1477,7 +1501,7 @@ img {
   }
 
   .grid {
-    gap: 12px;
+    gap: 24px 12px;
   }
 
   /* Компактная карточка: цена над кнопкой во всю ширину */
@@ -1603,7 +1627,7 @@ img {
 
   .buy__options {
     gap: 24px;
-    margin-top: 16px;
+    margin-top: 32px;
     padding: 0 4px;
   }
 
@@ -1618,6 +1642,7 @@ img {
   .chip--size .chip__name {
     width: 100%;
     height: 44px;
+    padding: 0 4px;
     font-size: 15px;
   }
 
@@ -1667,22 +1692,20 @@ img {
   }
 
   .basket-item__text {
+    min-height: 96px;
     margin-right: -12px;
   }
 
   .basket-item__text h3 {
-    min-height: 36px;
     font-size: 15px;
   }
 
   .basket-item__text p {
-    margin-top: 4px;
+    margin-top: 2px;
     font-size: 13px;
   }
 
-  .basket-item__text strong,
-  .basket-item__text h3 + strong {
-    margin-top: auto;
+  .basket-item__text strong {
     padding-top: 4px;
     font-size: 18px;
     line-height: 40px;
@@ -1695,6 +1718,7 @@ img {
   }
 
   .basket__hint {
+    gap: 6px;
     padding: 20px;
     font-size: 15px;
   }
@@ -1703,12 +1727,24 @@ img {
     padding: 14px 16px calc(16px + env(safe-area-inset-bottom));
   }
 
+  .basket__foot .total span,
+  .order-summary__foot .total span {
+    font-size: 20px;
+  }
+
   .basket__foot .button {
     margin-top: 12px;
   }
 
+  /* Один и тот же отступ: заголовок — форма, форма — список товаров, список — подвал */
   .order {
-    padding-block: 24px 56px;
+    --gap: 56px;
+
+    padding-block: 24px var(--gap);
+  }
+
+  .order__layout {
+    gap: var(--gap);
   }
 
   .order__form {
@@ -1716,7 +1752,7 @@ img {
   }
 
   .order__form h1 {
-    margin-bottom: 4px;
+    margin-bottom: calc(var(--gap) - 20px);
   }
 
   .form-field {
@@ -1760,12 +1796,23 @@ img {
   }
 
   .order-summary__addons {
-    margin-top: -6px;
+    margin-top: -4px;
+    padding-bottom: 2px;
+    font-size: 14px;
   }
 
   .order-summary__empty {
     padding: 12px 16px;
     font-size: 16px;
+  }
+
+  .order-summary__min {
+    margin: 12px 8px 0;
+    font-size: 14px;
+  }
+
+  .order-summary__min + .consent {
+    margin-top: 10px;
   }
 
   .order-summary__foot {

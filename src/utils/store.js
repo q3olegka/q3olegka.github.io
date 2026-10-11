@@ -30,15 +30,18 @@ export const readDraft = () => withTable('readonly', (table) => table.get(KEY)).
 export const saveDraft = (store) => withTable('readwrite', (table) => table.put(store, KEY));
 export const clearDraft = () => withTable('readwrite', (table) => table.delete(KEY));
 
+// Поля, появившиеся позже остальных: в сохранённых правках владельца и старых файлах их может не быть
+export const withDefaults = (data) => ({ ...data, delivery: { minOrder: 0, ...data.delivery } });
+
 export async function fetchPublished() {
   const response = await fetch(`${import.meta.env.BASE_URL}data/store.json`, { cache: 'no-cache' });
   if (!response.ok) throw new Error(`store.json: ${response.status}`);
-  return response.json();
+  return withDefaults(await response.json());
 }
 
 export async function loadStore() {
   const [published, draft] = await Promise.all([fetchPublished(), readDraft()]);
-  return { store: draft ?? published, isDraft: Boolean(draft) };
+  return { store: draft ? withDefaults(draft) : published, isDraft: Boolean(draft) };
 }
 
 // Проверка формы файла перед загрузкой в настройках
@@ -59,6 +62,7 @@ export function isValidStore(data) {
     ) &&
     typeof data.delivery?.price === 'number' &&
     typeof data.delivery?.freeFrom === 'number' &&
+    ['number', 'undefined'].includes(typeof data.delivery.minOrder) &&
     Array.isArray(data.delivery?.zone) &&
     data.delivery.zone.length >= 3 &&
     Array.isArray(data.cafe?.coords)
@@ -73,12 +77,8 @@ export const sortedVariants = (product) => [...product.variants].sort((a, b) => 
 export const productsOf = (store, categoryId) =>
   store.products.filter((product) => product.categoryId === categoryId && !product.hidden);
 
-// Справка «Размер (г)» у категории: все размеры каталога, available — есть ли размер в этой категории.
-// У категории без размеров справки нет.
+// Справка «Размер (г)» у категории: размеры её товаров по возрастанию. У категории без размеров справки нет.
 export function sizeLegend(store, categoryId) {
-  const sizesOf = (products) => new Set(products.flatMap((product) => product.variants.map((variant) => variant.size)).filter(Boolean));
-  const own = sizesOf(productsOf(store, categoryId));
-  if (!own.size) return [];
-  const all = sizesOf(store.products.filter((product) => !product.hidden));
-  return [...all].sort((a, b) => a - b).map((size) => ({ size, available: own.has(size) }));
+  const sizes = productsOf(store, categoryId).flatMap((product) => product.variants.map((variant) => variant.size));
+  return [...new Set(sizes.filter(Boolean))].sort((a, b) => a - b);
 }

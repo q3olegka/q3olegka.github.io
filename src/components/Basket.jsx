@@ -11,7 +11,9 @@ import Stepper from './Stepper.jsx';
 // его не передают, и кнопка просто закрывает корзину.
 export default function Basket({ open, onClose, checkoutHref }) {
   const { delivery } = useStore().store;
-  const { items, subtotal } = useCart();
+  const { items, subtotal, missing } = useCart();
+  // Оформить заказ нельзя из пустой корзины и пока сумма меньше минимальной
+  const blocked = !items.length || missing > 0;
 
   return (
     <Overlay open={open} onClose={onClose} kind="basket" label="Ваш заказ">
@@ -47,21 +49,27 @@ export default function Basket({ open, onClose, checkoutHref }) {
               />
             </article>
           ))}
-          <p className="basket__hint">
-            {items.length ? `Бесплатная доставка — от ${formatPrice(delivery.freeFrom)}` : 'В корзине пока пусто'}
-          </p>
+          <div className="basket__hint">
+            {!items.length && <p>В корзине пока пусто</p>}
+            {items.length > 0 && missing > 0 && (
+              <p className="basket__min">
+                Минимальный заказ — от {formatPrice(delivery.minOrder)}. Добавьте ещё на {formatPrice(missing)}
+              </p>
+            )}
+            {items.length > 0 && <p>Бесплатная доставка — от {formatPrice(delivery.freeFrom)}</p>}
+          </div>
         </div>
         <footer className="basket__foot">
           <p className="total">
             <span>Итого:</span>
             <strong>{formatPrice(subtotal)}</strong>
           </p>
-          {checkoutHref && items.length ? (
+          {checkoutHref && !blocked ? (
             <a className="button" href={checkoutHref}>
               Оформить заказ
             </a>
           ) : (
-            <button type="button" className="button" disabled={!items.length} onClick={onClose}>
+            <button type="button" className="button" disabled={blocked} onClick={onClose}>
               Оформить заказ
             </button>
           )}

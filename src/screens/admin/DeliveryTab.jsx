@@ -41,6 +41,11 @@ export default function DeliveryTab({ store, update }) {
         <div className="form-grid">
           <NumberField label="Стоимость доставки, Р" value={delivery.price} onChange={(price) => setDelivery({ price })} />
           <NumberField label="Бесплатно при заказе от, Р" value={delivery.freeFrom} onChange={(freeFrom) => setDelivery({ freeFrom })} />
+          <NumberField
+            label="Минимальная сумма заказа, Р (0 — без ограничения)"
+            value={delivery.minOrder}
+            onChange={(minOrder) => setDelivery({ minOrder })}
+          />
           <TextField label="Время доставки" value={delivery.time} onChange={(time) => setDelivery({ time })} />
           <TextField label="Адрес кофейни" value={cafe.address} onChange={(address) => setCafe({ address })} />
           <TextField

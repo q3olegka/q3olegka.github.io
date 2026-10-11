@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { addLine, countOf, deliveryPrice, lineKey, removeLast, setLineQty, summarize } from './cart.js';
-import { isValidStore, sizeLegend } from './store.js';
+import { isValidStore, sizeLegend, withDefaults } from './store.js';
 
 const store = JSON.parse(readFileSync(new URL('../../public/data/store.json', import.meta.url), 'utf8'));
 
@@ -93,20 +93,31 @@ test('строка без товара, размера или допа в сво
   assert.equal(summary.subtotal, 420);
 });
 
+test('минимальная сумма заказа: сколько не хватает', () => {
+  const withMinimum = { ...store, delivery: { ...store.delivery, minOrder: 500 } };
+  const latte = (qty) => [{ productId: 'latte', size: 250, addonIds: [], qty, at: 1 }];
+  assert.equal(summarize(latte(2), store).missing, 0);
+  assert.equal(summarize(latte(2), withMinimum).missing, 80);
+  assert.equal(summarize(latte(3), withMinimum).missing, 0);
+  assert.equal(summarize([], withMinimum).missing, 500);
+});
+
 test('данные по умолчанию проходят проверку формы', () => {
   assert.equal(isValidStore(store), true);
   assert.equal(isValidStore({ ...store, products: [{ id: 'x' }] }), false);
   assert.equal(isValidStore(null), false);
 });
 
-test('справка о размерах: у десертного кофе 250 недоступен', () => {
-  assert.deepEqual(sizeLegend(store, 'classic'), [
-    { size: 250, available: true },
-    { size: 350, available: true },
-    { size: 450, available: true },
-  ]);
-  assert.deepEqual(
-    sizeLegend(store, 'dessert').map((entry) => entry.available),
-    [false, true, true],
-  );
+test('файл без минимальной суммы подходит и получает ноль, с нечисловой — нет', () => {
+  const { minOrder, ...delivery } = store.delivery;
+  assert.equal(isValidStore({ ...store, delivery }), true);
+  assert.equal(withDefaults({ ...store, delivery }).delivery.minOrder, 0);
+  assert.equal(withDefaults({ ...store, delivery: { ...delivery, minOrder: 300 } }).delivery.minOrder, 300);
+  assert.equal(isValidStore({ ...store, delivery: { ...delivery, minOrder: '300' } }), false);
+});
+
+test('справка о размерах: только размеры самой категории', () => {
+  assert.deepEqual(sizeLegend(store, 'classic'), [250, 350, 450]);
+  assert.deepEqual(sizeLegend(store, 'dessert'), [350, 450]);
+  assert.deepEqual(sizeLegend(store, 'нет такой'), []);
 });

@@ -34,6 +34,8 @@ export function summarize(lines, store) {
     const variant = product?.variants.find((candidate) => (candidate.size ?? null) === line.size);
     const addons = line.addonIds.map((id) => product?.addonIds.includes(id) && store.addons.find((addon) => addon.id === id));
     if (!variant || addons.some((addon) => !addon)) continue;
+    // В подписи допы идут в том же порядке, что и в окне покупки
+    addons.sort((a, b) => store.addons.indexOf(a) - store.addons.indexOf(b));
     const unit = variant.price + addons.reduce((sum, addon) => sum + addon.price, 0);
     items.push({
       key: lineKey(line),
@@ -53,6 +55,8 @@ export function summarize(lines, store) {
     subtotal,
     delivery,
     total: subtotal + delivery,
+    // Сколько не хватает до минимальной суммы заказа; пока не ноль, оформить заказ нельзя
+    missing: Math.max(0, store.delivery.minOrder - subtotal),
   };
 }
 

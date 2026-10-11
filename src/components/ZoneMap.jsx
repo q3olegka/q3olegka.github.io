@@ -1,11 +1,11 @@
-import { Clock, MapPin, Maximize, Minimize, Minus, Plus } from 'lucide-react';
+import { MapPin, Maximize, Minimize, Minus, Plus } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock.js';
 import { useStore } from '../hooks/useStore.jsx';
 import { createZoneMap, hasMapKey } from '../utils/ymaps.js';
 
 // Карта с кофейней и зоной доставки. point — найденный адрес [долгота, широта] или null.
-// card — показывать карточку кофейни; onReady получает управление картой (нужно редактору зоны).
+// card — показывать плашку с адресом кофейни; onReady получает управление картой (нужно редактору зоны).
 export default function ZoneMap({ point = null, card = false, className = '', onReady }) {
   const { cafe, delivery } = useStore().store;
   const boxRef = useRef(null);
@@ -88,16 +88,10 @@ export default function ZoneMap({ point = null, card = false, className = '', on
         </div>
       )}
       {card && (
-        <ul className="map__card">
-          <li>
-            <MapPin size={18} aria-hidden="true" />
-            {cafe.address}
-          </li>
-          <li>
-            <Clock size={18} aria-hidden="true" />
-            Доставка {delivery.time}
-          </li>
-        </ul>
+        <p className="map__card">
+          <MapPin size={18} aria-hidden="true" />
+          {cafe.address}
+        </p>
       )}
       {state === 'ready' && (
         <div className="map__tools">

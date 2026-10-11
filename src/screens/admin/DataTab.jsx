@@ -1,7 +1,7 @@
 import { Download, Upload } from 'lucide-react';
 import { useState } from 'react';
 import { useStore } from '../../hooks/useStore.jsx';
-import { isValidStore } from '../../utils/store.js';
+import { isValidStore, withDefaults } from '../../utils/store.js';
 import { ConfirmButton } from './fields.jsx';
 
 export default function DataTab({ store, update }) {
@@ -23,7 +23,7 @@ export default function DataTab({ store, update }) {
     try {
       const data = JSON.parse(await file.text());
       if (!isValidStore(data)) throw new Error('shape');
-      update(() => data);
+      update(() => withDefaults(data));
       setMessage('Файл загружен: данные сайта заменены.');
     } catch {
       setMessage('Этот файл не подходит: нужен store.json, скачанный с этой страницы.');

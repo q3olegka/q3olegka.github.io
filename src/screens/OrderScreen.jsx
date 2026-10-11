@@ -51,6 +51,7 @@ export default function OrderScreen() {
   // Сервис проверки недоступен (нет ключа, сбой, лимит) — заказ не блокируем, адрес уточнит оператор
   const ready =
     summary.count > 0 &&
+    summary.missing === 0 &&
     form.name.trim().length > 1 &&
     isPhoneComplete(form.phone) &&
     Boolean(address) &&
@@ -189,7 +190,7 @@ export default function OrderScreen() {
                     <li>
                       <span>Доставка курьером</span>
                       <span />
-                      <span>{summary.delivery ? formatPrice(summary.delivery) : 'бесплатно'}</span>
+                      <span className="order-summary__price">{summary.delivery ? formatPrice(summary.delivery) : 'бесплатно'}</span>
                     </li>
                   )}
                 </ul>
@@ -198,6 +199,11 @@ export default function OrderScreen() {
                     <span>Итого:</span>
                     <strong>{formatPrice(summary.total)}</strong>
                   </p>
+                  {summary.count > 0 && summary.missing > 0 && (
+                    <p className="order-summary__min" role="status">
+                      Минимальный заказ — от {formatPrice(delivery.minOrder)}. Добавьте ещё на {formatPrice(summary.missing)}
+                    </p>
+                  )}
                   <p className="consent">
                     Оформляя заказ, вы соглашаетесь с обработкой{' '}
                     <a href="#" onClick={stay}>
