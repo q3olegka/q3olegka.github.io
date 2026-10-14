@@ -1,0 +1,468 @@
+{
+  "categories": [
+    {
+      "id": "classic",
+      "title": "Классические напитки"
+    },
+    {
+      "id": "not-coffee",
+      "title": "Не кофе"
+    },
+    {
+      "id": "dessert",
+      "title": "Десертный кофе"
+    },
+    {
+      "id": "category-mv7uy1kl",
+      "title": "Мороженое"
+    },
+    {
+      "id": "category-mv7umewa",
+      "title": "Снеки / Закуски"
+    }
+  ],
+  "addons": [
+    {
+      "id": "syrup",
+      "name": "Сироп",
+      "price": 30
+    },
+    {
+      "id": "marshmallow",
+      "name": "Маршмеллоу",
+      "price": 30
+    },
+    {
+      "id": "plant-milk",
+      "name": "Раст. молоко",
+      "price": 70
+    },
+    {
+      "id": "addon-mv11hkdt",
+      "name": "Морковный фрэш",
+      "price": 150
+    },
+    {
+      "id": "addon-mv2k8w3y",
+      "name": "Новый доп1 энергия",
+      "price": 30
+    },
+    {
+      "id": "addon-mv2k8wbj",
+      "name": "Новый доп2",
+      "price": 30
+    },
+    {
+      "id": "addon-mv2k8wgt",
+      "name": "Новый доп3",
+      "price": 30
+    },
+    {
+      "id": "addon-mv2k8wmc",
+      "name": "Новый доп4",
+      "price": 30
+    }
+  ],
+  "products": [
+    {
+      "id": "cappuccino",
+      "categoryId": "classic",
+      "name": "Капучино",
+      "description": "Нежная молочная пенка",
+      "image": "images/img_3.webp",
+      "zoom": 1.15,
+      "variants": [
+        {
+          "size": 250,
+          "price": 180
+        },
+        {
+          "size": 350,
+          "price": 210
+        },
+        {
+          "size": 450,
+          "price": 240
+        },
+        {
+          "size": 550,
+          "price": 350
+        }
+      ],
+      "addonIds": [
+        "syrup",
+        "addon-mv11hkdt",
+        "addon-mv2k8w3y",
+        "addon-mv2k8wbj",
+        "addon-mv2k8wgt",
+        "addon-mv2k8wmc",
+        "marshmallow",
+        "plant-milk"
+      ],
+      "hidden": false
+    },
+    {
+      "id": "americano",
+      "categoryId": "classic",
+      "name": "Американо",
+      "description": "Классический черный кофе",
+      "image": "images/img_4.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 250,
+          "price": 150
+        },
+        {
+          "size": 350,
+          "price": 180
+        },
+        {
+          "size": 450,
+          "price": 210
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "latte",
+      "categoryId": "classic",
+      "name": "Латте",
+      "description": "Мягкий и сливочный",
+      "image": "images/img_5.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 250,
+          "price": 210
+        },
+        {
+          "size": 350,
+          "price": 240
+        },
+        {
+          "size": 450,
+          "price": 270
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "flat-white",
+      "categoryId": "classic",
+      "name": "Флэт Уайт",
+      "description": "Насыщенный вкус",
+      "image": "images/img_5.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 250,
+          "price": 200
+        },
+        {
+          "size": 350,
+          "price": 230
+        },
+        {
+          "size": 450,
+          "price": 260
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "raf",
+      "categoryId": "classic",
+      "name": "Раф",
+      "description": "Сироп на выбор",
+      "image": "images/img_1.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 250,
+          "price": 210
+        },
+        {
+          "size": 350,
+          "price": 240
+        },
+        {
+          "size": 450,
+          "price": 270
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "mocha",
+      "categoryId": "classic",
+      "name": "Мокко",
+      "description": "Шоколад и кофе",
+      "image": "images/img_5.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 250,
+          "price": 210
+        },
+        {
+          "size": 350,
+          "price": 240
+        },
+        {
+          "size": 450,
+          "price": 270
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "hot-chocolate",
+      "categoryId": "not-coffee",
+      "name": "Горячий шоколад",
+      "description": "Насыщенный шоколадный вкус",
+      "image": "images/img_5.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 250,
+          "price": 170
+        },
+        {
+          "size": 350,
+          "price": 200
+        },
+        {
+          "size": 450,
+          "price": 230
+        }
+      ],
+      "addonIds": [
+        "syrup",
+        "marshmallow",
+        "plant-milk"
+      ],
+      "hidden": false
+    },
+    {
+      "id": "cocoa",
+      "categoryId": "not-coffee",
+      "name": "Какао",
+      "description": "Нежный и ароматный",
+      "image": "images/img_2.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 250,
+          "price": 170
+        },
+        {
+          "size": 350,
+          "price": 200
+        },
+        {
+          "size": 450,
+          "price": 230
+        }
+      ],
+      "addonIds": [
+        "syrup",
+        "marshmallow",
+        "plant-milk"
+      ],
+      "hidden": false
+    },
+    {
+      "id": "tea",
+      "categoryId": "not-coffee",
+      "name": "Чай",
+      "description": "Классические сорта",
+      "image": "images/img_5.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 250,
+          "price": 170
+        },
+        {
+          "size": 350,
+          "price": 200
+        },
+        {
+          "size": 450,
+          "price": 230
+        }
+      ],
+      "addonIds": [
+        "syrup",
+        "marshmallow",
+        "plant-milk"
+      ],
+      "hidden": false
+    },
+    {
+      "id": "coconut-bounty",
+      "categoryId": "dessert",
+      "name": "Кокосовый баунти",
+      "description": "Классический черный кофе",
+      "image": "images/img_5.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 350,
+          "price": 255
+        },
+        {
+          "size": 450,
+          "price": 285
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "cappuccino-snickers",
+      "categoryId": "dessert",
+      "name": "Капучино сникерс",
+      "description": "Классический черный кофе",
+      "image": "images/img_5.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 350,
+          "price": 255
+        },
+        {
+          "size": 450,
+          "price": 285
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "latte-twix",
+      "categoryId": "dessert",
+      "name": "Латте твикс",
+      "description": "Классический черный кофе",
+      "image": "images/img_5.webp",
+      "zoom": 1.2,
+      "variants": [
+        {
+          "size": 350,
+          "price": 255
+        },
+        {
+          "size": 450,
+          "price": 285
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "product-mv7umuh6",
+      "categoryId": "category-mv7umewa",
+      "name": "Круассан классический",
+      "description": "Ультра свежий, легкий, хрустящий",
+      "image": "images/img_6.webp",
+      "zoom": 1.1,
+      "variants": [
+        {
+          "size": 60,
+          "price": 45
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    },
+    {
+      "id": "product-mv7uz2a3",
+      "categoryId": "category-mv7uy1kl",
+      "name": "Шоколадное мороженое",
+      "description": "Сливочное, шоколадное с орешками",
+      "image": "images/img_7.webp",
+      "zoom": 1.1,
+      "variants": [
+        {
+          "size": 250,
+          "price": 350
+        }
+      ],
+      "addonIds": [],
+      "hidden": false
+    }
+  ],
+  "delivery": {
+    "minOrder": 500,
+    "price": 100,
+    "freeFrom": 1000,
+    "areaText": "В пределах 5км\nот кофейни",
+    "time": "от 30 мин",
+    "zone": [
+      [
+        43.895,
+        56.346
+      ],
+      [
+        43.91790934597234,
+        56.34112063625101
+      ],
+      [
+        43.92945299664325,
+        56.350135163049785
+      ],
+      [
+        43.94731227528513,
+        56.34417290149937
+      ],
+      [
+        43.95374957732966,
+        56.34350969603668
+      ],
+      [
+        43.976047746251716,
+        56.33487439302743
+      ],
+      [
+        43.959089155542685,
+        56.32442297119316
+      ],
+      [
+        43.95414489117448,
+        56.31583935008973
+      ],
+      [
+        43.93699767437766,
+        56.32128055076414
+      ],
+      [
+        43.91301513881423,
+        56.32474706781322
+      ],
+      [
+        43.885,
+        56.338
+      ]
+    ]
+  },
+  "cafe": {
+    "address": "Мещерский бульвар, 10Б",
+    "coords": [
+      43.93479576331697,
+      56.339130678770054
+    ],
+    "phone": "+7 950 625 21 44",
+    "email": "info@coffee-mall-nn.ru"
+  },
+  "socials": {
+    "telegram": "#",
+    "vk": "#",
+    "whatsapp": "#"
+  }
+}
